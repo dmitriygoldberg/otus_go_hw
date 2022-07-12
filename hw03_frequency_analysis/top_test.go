@@ -6,7 +6,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// Change to true if needed.
 var taskWithAsteriskIsCompleted = false
 
 var text = `Как видите, он  спускается  по  лестнице  вслед  за  своим
@@ -48,7 +47,57 @@ func TestTop10(t *testing.T) {
 		require.Len(t, Top10(""), 0)
 	})
 
-	t.Run("positive test", func(t *testing.T) {
+	t.Run("positive test english", func(t *testing.T) {
+		text := "cat and dog, one dog,two cats and one man"
+		expected := []string{
+			"and",     // 2
+			"one",     // 2
+			"cat",     // 1
+			"cats",    // 1
+			"dog,",    // 1
+			"dog,two", // 1
+			"man",     // 1
+		}
+		require.Equal(t, expected, Top10(text))
+	})
+
+	t.Run("positive test, more than 10 words with the same number", func(t *testing.T) {
+		text := "один один два два три три четыре четыре пять пять шесть шесть семь семь восемь восемь " +
+			"девять девять десять десять одинадцать одинадцать"
+		expected := []string{
+			"восемь",
+			"два",
+			"девять",
+			"десять",
+			"один",
+			"одинадцать",
+			"пять",
+			"семь",
+			"три",
+			"четыре",
+		}
+		require.Equal(t, expected, Top10(text))
+	})
+
+	t.Run("positive test, 10 words with the same number", func(t *testing.T) {
+		text := "один один два два три три четыре четыре пять пять шесть шесть семь семь восемь восемь " +
+			"девять девять десять десять"
+		expected := []string{
+			"восемь",
+			"два",
+			"девять",
+			"десять",
+			"один",
+			"пять",
+			"семь",
+			"три",
+			"четыре",
+			"шесть",
+		}
+		require.Equal(t, expected, Top10(text))
+	})
+
+	t.Run("positive test russian", func(t *testing.T) {
 		if taskWithAsteriskIsCompleted {
 			expected := []string{
 				"а",         // 8
