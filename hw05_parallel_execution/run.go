@@ -12,7 +12,7 @@ type Task func() error
 
 // обход ошибки линтера, если объявлять переменную в методе Rum.
 // variable 'errorLimit' is only used in the if-statement (run.go:55:2); consider using short syntax (ifshort)
-// Имхо линтер работает некорректно, т.к. не видит использования переменной в горутинах
+// Имхо линтер работает некорректно, т.к. не видит использования переменной в горутинах.
 var errorLimit int32
 
 // Run starts tasks in n goroutines and stops its work when receiving m errors from tasks.
