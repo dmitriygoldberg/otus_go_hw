@@ -10,6 +10,11 @@ var ErrErrorsLimitExceeded = errors.New("errors limit exceeded")
 
 type Task func() error
 
+// обход ошибки линтера, если объявлять переменную в методе Rum.
+// variable 'errorLimit' is only used in the if-statement (run.go:55:2); consider using short syntax (ifshort)
+// Имхо линтер работает некорректно, т.к. не видит использования переменной в горутинах
+var errorLimit int32
+
 // Run starts tasks in n goroutines and stops its work when receiving m errors from tasks.
 func Run(tasks []Task, n, m int) error {
 	// max 0 errors
@@ -17,7 +22,7 @@ func Run(tasks []Task, n, m int) error {
 		return ErrErrorsLimitExceeded
 	}
 
-	errorLimit := int32(m)
+	errorLimit = int32(m)
 	taskChannel := make(chan Task)
 	wg := sync.WaitGroup{}
 	wg.Add(n)
